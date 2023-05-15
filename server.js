@@ -3,9 +3,10 @@ const { dirname } = require('path');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const port = process.env.PORT || 8000;
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/server.html');
 });
 
 // app.listen(8000, () => {
@@ -22,8 +23,8 @@ io.on('connection', (socket) => {
     });
 });
 
-http.listen(8000, () => {
-    console.log('Server listening on port 8000');
+http.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
 });
 
 io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' }); // This will emit the event to all connected sockets
